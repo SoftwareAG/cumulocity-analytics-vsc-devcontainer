@@ -1,0 +1,15 @@
+#!/bin/bash
+
+case "${1}" in
+    blocks)
+        case "${2}" in
+            deploy)
+                analytics_builder build extension --input . --cumulocity_url "$CUMULOCITY_SERVER_URL" --username "$CUMULOCITY_TENANT"/"$CUMULOCITY_USERNAME" --password "$CUMULOCITY_PASSWORD" --name "${3}" --restart;;
+            undeploy)
+                analytics_builder build extension --cumulocity_url "$CUMULOCITY_SERVER_URL" --username "$CUMULOCITY_TENANT"/"$CUMULOCITY_USERNAME" --password "$CUMULOCITY_PASSWORD" --name "${3}" --restart --delete;;
+            *)
+                echo "'${2}' not a valid option. Available options: deploy, undeploy"
+        esac
+    *)
+        echo "'${1}' not a valid option. Available options: blocks"
+esac

@@ -1,0 +1,33 @@
+{
+	"name": "analytics-development",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"args": { 
+			"APAMA_VERSION": "10.7",
+			"APAMA_ANALYTICS_BUILDER_SDK_BRANCH": "rel/10.7.0.x"
+		}
+	},
+	"containerEnv": { 
+		"CUMULOCITY_SERVER_URL": "https://example.cumulocity.com",
+		"CUMULOCITY_TENANT": "tenantId",
+		"CUMULOCITY_USERNAME": "username",
+		"CUMULOCITY_PASSWORD": "password",
+		"CUMULOCITY_APPKEY": "my-apama-dev-app-key",
+		//"CUMULOCITY_FORCE_INITIAL_HOST": "true",
+		//"CUMULOCITY_MEASUREMENT_FORMAT": "null",
+		//"CUMULOCITY_PROXY_HOST": "null",
+		//"CUMULOCITY_PROXY_PORT": "null",
+		//"CUMULOCITY_PROXY_USERNAME": "null",
+		//"CUMULOCITY_PROXY_PASSWORD": "null",
+	},
+	"settings": {},
+	"extensions": [
+		"ms-python.python",
+		"slevesque.vscode-zipexplorer",
+		"yzhang.markdown-all-in-one",
+		"apamacommunity.apama-extensions"
+	],
+	"postStartCommand": "",
+	"containerUser": "sagadmin",
+	"overrideCommand": true
+}

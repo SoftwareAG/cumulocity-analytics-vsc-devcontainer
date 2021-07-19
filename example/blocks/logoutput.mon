@@ -1,0 +1,106 @@
+/*
+ * $Copyright (c) 2021 Software AG, Darmstadt, Germany and/or Software AG USA Inc., Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.$
+ * This file is licensed under the Apache 2.0 license - see https://www.apache.org/licenses/LICENSE-2.0
+ *
+ */
+/* ***DISCLAIMER***
+ *
+ * This is only a sample block and there is no support for this block. This block only supports English. There may be incompatible changes in the future releases without prior notice.
+ * To use this block, we recommend that you copy it and change the package name. Software AG accepts no responsibility for bug fixes, maintenance or adding new features to this block.
+ */
+
+package apamax.analyticsbuilder.devenv.samples;
+
+using apama.analyticsbuilder.BlockBase;
+using apama.analyticsbuilder.Activation;
+
+/**
+ * Event definition of the parameters for the HTTP Output block.
+ */
+event LogOutput_$Parameters {
+	string logLevel;
+
+	/** DEBUG */
+    constant string logLevel_debug := "DEBUG";
+	/** INFO */
+    constant string logLevel_info := "INFO";
+	/** WARN */
+    constant string logLevel_warn := "WARN";
+	/** ERROR */
+    constant string logLevel_error := "ERROR";
+
+	constant string $DEFAULT_logLevel := "INFO";
+}
+/**
+ * Log output.
+ *
+ * Outputs the input to the log and then passes it on.
+ *
+ * @$blockCategory Utilities
+ */
+event LogOutput {
+	
+	/**BlockBase object.
+	 *
+	 * This is initialized by the framework when the block is required for a model.
+	 */
+	BlockBase $base;
+
+	/**The parameters for the block.*/
+	LogOutput_$Parameters $parameters;
+	
+	/** The log level on which the input will be logged. */
+	string logLevel;
+	
+	/** Called once at block start up. */
+	action $init() {
+		// get logLevel:
+		logLevel := $parameters.logLevel;
+	}
+
+	/**
+	 * This action receives the input. 
+	 *  
+	 * @param $input_value any data to be logged.
+	 */
+	action $process(Activation $activation, any $input_value) {
+		if (logLevel = "DEBUG") {
+			log $input_value.toString() at DEBUG; 
+		} else if (logLevel = "ERROR") {
+			log $input_value.toString() at ERROR;
+		} else if (logLevel = "WARN") {
+			log $input_value.toString() at WARN; 
+		} else {
+			log $input_value.toString() at INFO;
+		}
+        
+		switch ($input_value as unknownInput) 
+		{
+			case float:   	{ $setOutput_outputFloat($activation, <float> $input_value); }
+			case string: 	{ $setOutput_outputString($activation, <string> $input_value); }
+			default:      	{ $setOutput_outputAny($activation, $input_value); }
+		}
+		
+	}
+	
+	/**
+	 * Float output
+	 *
+	 * The output as float. Triggered when the input also was a float.
+	 */
+	action<Activation, float> $setOutput_outputFloat;
+
+	/**
+	 * String output
+	 *
+	 * The output as string. Triggered when the input also was a string.
+	 */
+	action<Activation, string> $setOutput_outputString;
+
+	/**
+	 * Any output
+	 *
+	 * The output as any. Triggered when the input also none of the other output types.
+	 */
+	action<Activation, any> $setOutput_outputAny;
+}

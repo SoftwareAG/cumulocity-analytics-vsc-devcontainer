@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"name": "Development",
+			"path": "."
+		},
+		{
+			"name": "Analytics Builder SDK",
+			"path": "/opt/softwareag/apama-analytics-builder-block-sdk"
+		},
+		{
+			"name": "Analytics Builder SDK Documentation",
+			"path": "/opt/softwareag/apama-analytics-builder-block-sdk/doc"
+		},
+		{
+			"name": "Apama",
+			"path": "/opt/softwareag/Apama"
+		}
+	],
+	"settings": {}
+}
