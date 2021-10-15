@@ -4,6 +4,7 @@ FROM store/softwareag/apama-builder:${APAMA_VERSION}
 USER root
 RUN microdnf install git
 RUN microdnf install python3
+RUN microdnf install tar
 
 WORKDIR "/usr/local/bin"
 COPY apama apama
